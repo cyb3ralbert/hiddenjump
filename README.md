@@ -1,4 +1,4 @@
-# dotfiles — reverse SSH to a home laptop
+# hiddenjump — reverse SSH to a home laptop
 
 > Проект про удалённый доступ к домашнему ноуту — без лишних слов и без
 > паранойи. Российский VPS за 350₽/мес оказался проще и надёжнее, чем
