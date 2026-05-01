@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Render ${VAR} placeholders from .env into deployable config files.
+#
+# Usage:
+#   bin/install ssh        render ssh/config -> ~/.ssh/config
+#   bin/install tunnel     render systemd unit + install it (home laptop only)
+#   bin/install all        both of the above
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+if [[ ! -f .env ]]; then
+  echo "error: .env not found. Copy .env.example and edit it." >&2
+  exit 1
+fi
+if ! command -v envsubst >/dev/null; then
+  echo "error: envsubst not found. Install gettext (Arch) or gettext-base (Debian/Ubuntu)." >&2
+  exit 1
+fi
+
+set -a
+# shellcheck disable=SC1091
+source .env
+set +a
+
+render_ssh() {
+  mkdir -p "$HOME/.ssh"
+  chmod 700 "$HOME/.ssh"
+  envsubst < ssh/config > "$HOME/.ssh/config"
+  chmod 600 "$HOME/.ssh/config"
+  echo "rendered: $HOME/.ssh/config"
+}
+
+render_tunnel() {
+  local tmp
+  tmp=$(mktemp)
+  envsubst < systemd/reverse-tunnel.service > "$tmp"
+  sudo install -m 644 "$tmp" /etc/systemd/system/reverse-tunnel.service
+  rm -f "$tmp"
+  sudo systemctl daemon-reload
+  echo "installed: /etc/systemd/system/reverse-tunnel.service"
+  echo "next: sudo systemctl enable --now reverse-tunnel.service"
+}
+
+case "${1:-all}" in
+  ssh)    render_ssh ;;
+  tunnel) render_tunnel ;;
+  all)    render_ssh; render_tunnel ;;
+  *)      echo "usage: $0 {ssh|tunnel|all}" >&2; exit 2 ;;
+esac

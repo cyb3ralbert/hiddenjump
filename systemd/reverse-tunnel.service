@@ -1,0 +1,20 @@
+[Unit]
+Description=Reverse SSH Tunnel (autossh)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=${HOME_USER}
+Environment=AUTOSSH_GATETIME=0
+ExecStart=/usr/bin/autossh -M 0 -N -R ${TUNNEL_PORT}:localhost:22 \
+  -i /home/${HOME_USER}/.ssh/id_tunnel \
+  -o ServerAliveInterval=30 \
+  -o ServerAliveCountMax=3 \
+  -o ExitOnForwardFailure=yes \
+  -o StrictHostKeyChecking=accept-new \
+  ${VPS_USER}@${VPS_HOST}
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

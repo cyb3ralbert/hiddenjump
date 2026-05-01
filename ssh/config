@@ -1,0 +1,15 @@
+Host vps
+    HostName ${VPS_HOST}
+    User root
+
+# Reach the home laptop from anywhere via the reverse tunnel on the VPS.
+Host home
+    HostName localhost
+    Port ${TUNNEL_PORT}
+    User ${HOME_USER}
+    ProxyJump vps
+
+Host *
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    HashKnownHosts yes
