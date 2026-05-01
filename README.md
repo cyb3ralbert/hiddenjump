@@ -258,3 +258,7 @@ ssh home
 toolchain, same shell history, same project tree as at the desk —
 from a train, a café, a borrowed laptop, whatever's nearby. That's
 the whole reason this exists.
+
+<p align="center">
+  <img src="assets/payoff.webp" alt="Claude Code running in Termux over the home tunnel" width="320">
+</p>
