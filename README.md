@@ -240,3 +240,10 @@ From any client:
 ```bash
 ssh home
 ```
+
+## The payoff
+
+`ssh home` from the phone, then `claude` in the terminal. Same
+toolchain, same shell history, same project tree as at the desk —
+from a train, a café, a borrowed laptop, whatever's nearby. That's
+the whole reason this exists.
