@@ -1,5 +1,16 @@
 # dotfiles — reverse SSH to a home laptop
 
+> Проект про удалённый доступ к домашнему ноуту — без лишних слов и без
+> паранойи. Российский VPS за 350₽/мес оказался проще и надёжнее, чем
+> зарубежные серверы с нестабильным соединением.
+>
+> Путь шёл по-талебовски — не бороться с ограничениями, а обтекать их.
+> Пробовали сложные схемы, возвращались к простому. В итоге
+> reverse SSH + autossh + fail2ban — минимум инструментов, максимум
+> надёжности.
+>
+> *Like water.*
+
 The home laptop sits on a residential ISP behind CGNAT. No public IP, no
 admin access to the router, nothing to forward. This repo is the boringest
 possible solution to "let me into my own machine from my phone": a
